@@ -5,11 +5,13 @@ import { defineStore, acceptHMRUpdate } from 'pinia';
 // Skapa ett interface som beskriver våra todos, bl.a. för
 // att få lite kodhjälp.
 interface ITodo {
+  id: number; 
   text: string;
   complete: boolean;
 }
 
 const DEBUGGING = import.meta.env.DEV;
+const nextId = ref(0); 
 
 // Skapa vårt store med namnet "todos"
 export const useTodosStore = defineStore('todos', () => {
@@ -32,6 +34,9 @@ export const useTodosStore = defineStore('todos', () => {
     // Konvertera från textformat till objekt
     todos.value = JSON.parse(savedTodos);
 
+    // Hitta det högsta id:t bland våra todos för att kunna öka id:t
+    nextId.value = Math.max(...todos.value.map(todo => todo.id)); 
+
     // Skriv ut hjälptext om vi är i utvecklarläge
     if (DEBUGGING) {
       console.log('Följande värden finns lagrade i localStorage');
@@ -52,17 +57,28 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   function addNewTodo(text: string, complete: boolean): void {
-    todos.value.push({ text, complete });
+    // Öka id:t för vår nästa todo
+    nextId.value += 1; 
+
+    todos.value.push({ text, complete, id: nextId.value }); // [!code highglight]
 
     saveTodosToLocalStorage();
   }
+
+  function toggleTodoState(id: number, isComplete: boolean): void { 
+    const item = todos.value.find(todo => todo.id === id); 
+    if (item) { 
+      item.complete = isComplete; 
+      saveTodosToLocalStorage(); 
+    } 
+  } 
 
   // När programmet laddas första gången så hämtar vi våra todos
   onMounted(() => {
     getTodosFromLocalStorage();
   });
 
-  return { todos, addNewTodo };
+  return { todos, addNewTodo, toggleTodoState }; 
 });
 
 // Används medan vi utvecklar så att ändringar vi skriver i denna fil
