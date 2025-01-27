@@ -1,0 +1,28 @@
+@import './variables.scss';
+@import './header';
+
+body,
+.about {
+    background-color: $primary-color;
+    font-family: $main-font;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1, 
+p,
+.text {
+    color: $text-color;
+}
+
+button {
+  background: none;
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    text-decoration: underline;
+}
+}

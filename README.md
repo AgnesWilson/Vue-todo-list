@@ -29,8 +29,8 @@ pnpm run lint
 
 
 TO DO: 
-- [ ] Fixa problem som uppstod efter esl-int installation
-- [ ] FÅ prettier att fungera 
+- [x] Fixa problem som uppstod efter esl-int installation
+- [x] FÅ prettier att fungera 
 - [ ] Skriv en read-me 
 - [ ] Stylea sidan
 - [ ] Gör extrauppgifter

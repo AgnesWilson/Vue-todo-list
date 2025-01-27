@@ -15,5 +15,3 @@ export function logTable(...aTableOfSomething: unknown[]): void {
     console.table(...aTableOfSomething);
   }
 }
-
-
