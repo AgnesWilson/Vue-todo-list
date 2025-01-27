@@ -2,16 +2,18 @@
 import { ref, onMounted } from 'vue';
 import { defineStore, acceptHMRUpdate } from 'pinia';
 
+import { log, logTable } from '@/helpers';
+
 // Skapa ett interface som beskriver våra todos, bl.a. för
 // att få lite kodhjälp.
 interface ITodo {
-  id: number; 
+  id: number;
   text: string;
   complete: boolean;
 }
 
 const DEBUGGING = import.meta.env.DEV;
-const nextId = ref(0); 
+const nextId = ref(0);
 
 // Skapa vårt store med namnet "todos"
 export const useTodosStore = defineStore('todos', () => {
@@ -26,7 +28,7 @@ export const useTodosStore = defineStore('todos', () => {
 
     if (savedTodos === null) {
       if (DEBUGGING) {
-        console.warn('Inga todos lagrade i localStorage sedan innan.');
+        log('Inga todos lagrade i localStorage sedan innan.');
       }
       return;
     }
@@ -35,12 +37,12 @@ export const useTodosStore = defineStore('todos', () => {
     todos.value = JSON.parse(savedTodos);
 
     // Hitta det högsta id:t bland våra todos för att kunna öka id:t
-    nextId.value = Math.max(...todos.value.map(todo => todo.id)); 
+    nextId.value = Math.max(...todos.value.map(todo => todo.id));
 
     // Skriv ut hjälptext om vi är i utvecklarläge
     if (DEBUGGING) {
-      console.log('Följande värden finns lagrade i localStorage');
-      console.table(todos.value);
+      log('Följande värden finns lagrade i localStorage');
+      logTable(todos.value);
     }
   }
 
@@ -51,34 +53,34 @@ export const useTodosStore = defineStore('todos', () => {
     localStorage.setItem('todos', stringified);
 
     if (DEBUGGING) {
-      console.log('Sparade följande värden i localStorage');
-      console.table(todos.value);
+      log('Sparade följande värden i localStorage');
+      logTable(todos.value);
     }
   }
 
   function addNewTodo(text: string, complete: boolean): void {
     // Öka id:t för vår nästa todo
-    nextId.value += 1; 
+    nextId.value += 1;
 
     todos.value.push({ text, complete, id: nextId.value }); // [!code highglight]
 
     saveTodosToLocalStorage();
   }
 
-  function toggleTodoState(id: number, isComplete: boolean): void { 
-    const item = todos.value.find(todo => todo.id === id); 
-    if (item) { 
-      item.complete = isComplete; 
-      saveTodosToLocalStorage(); 
-    } 
-  } 
+  function toggleTodoState(id: number, isComplete: boolean): void {
+    const item = todos.value.find(todo => todo.id === id);
+    if (item) {
+      item.complete = isComplete;
+      saveTodosToLocalStorage();
+    }
+  }
 
   // När programmet laddas första gången så hämtar vi våra todos
   onMounted(() => {
     getTodosFromLocalStorage();
   });
 
-  return { todos, addNewTodo, toggleTodoState }; 
+  return { todos, addNewTodo, toggleTodoState };
 });
 
 // Används medan vi utvecklar så att ändringar vi skriver i denna fil
