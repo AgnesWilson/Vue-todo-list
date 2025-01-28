@@ -42,7 +42,8 @@ function checkAllTasksCompleted() {
   <main>
     <div class="my-8">
 
-      <div v-if="todos.length > 0" v-for="(todo, index) in todos" :key="index">
+      <div v-if="todos.length > 0"></div>
+      <div v-for="(todo, index) in todos" :key="index">
         <SingleTodo :todo-text="todo.text" :complete="todo.complete" :id="todo.id" @task-completed="onTaskCompleted" />
       </div>
 
