@@ -81,5 +81,4 @@ TO DO:
 - [ ] Gör extrauppgifter
     - [ ] Rensa inputfältet efter Submit
     - [ ] Gör det möjligt att ta bor tasks 
-    - [ ] Stylea för olika skärmstorlekar 
     
