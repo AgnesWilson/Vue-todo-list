@@ -8,6 +8,7 @@ The website is a to-do list application where users can add tasks. The tasks are
 
 - Add tasks to the to-do list.
 - Mark tasks as completed and unmark them if necessary.
+- Remove tasks from to-do list
 - Persist tasks using local storage, so they are saved even after refreshing the page.
 - An "About" page where users can learn more about the website.
 
@@ -65,20 +66,9 @@ pnpm run lint
 
 ![Prettier](https://img.shields.io/badge/prettier-%23F7B93E.svg?style=for-the-badge&logo=prettier&logoColor=black)
 
+# Screenshots
 
-
-
-
-
-
-
-
-TO DO: 
-- [x] Fixa problem som uppstod efter esl-int installation
-- [x] FÅ prettier att fungera 
-- [x] Stylea sidan
-- [x] Skriv en read-me 
-- [ ] Gör extrauppgifter
-    - [ ] Rensa inputfältet efter Submit
-    - [ ] Gör det möjligt att ta bor tasks 
-    
+![home-page](src/screenshots/home.png)
+![complete task](src/screenshots/task-completed.png)
+![all tasks completed](src/screenshots/all-tasks-completed.png)
+![about us page](src/screenshots/about.png)
