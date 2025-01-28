@@ -14,6 +14,7 @@ const showAllTasksCompletedMessage = ref(false);
 
 function addTodo() {
   todoStore.addNewTodo(todoName.value, false);
+  todoName.value = '';
 }
 
 function onTaskCompleted() {
