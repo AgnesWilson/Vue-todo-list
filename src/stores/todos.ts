@@ -75,12 +75,21 @@ export const useTodosStore = defineStore('todos', () => {
     }
   }
 
+    // Funktion för att radera en todo
+    function deleteToDo(id: number): void {
+      const index = todos.value.findIndex(todo => todo.id === id);
+      if (index !== -1) {
+        todos.value.splice(index, 1); // Ta bort todo från arrayen
+        saveTodosToLocalStorage(); // Uppdatera localStorage
+      }
+    }
+
   // När programmet laddas första gången så hämtar vi våra todos
   onMounted(() => {
     getTodosFromLocalStorage();
   });
 
-  return { todos, addNewTodo, toggleTodoState };
+  return { todos, addNewTodo, toggleTodoState, deleteToDo };
 });
 
 // Används medan vi utvecklar så att ändringar vi skriver i denna fil

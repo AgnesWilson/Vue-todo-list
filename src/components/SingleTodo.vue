@@ -23,6 +23,11 @@ function toggleCompletedState() {
 
   todoStore.toggleTodoState(props.id, isDone.value);
 }
+
+
+function deleteToDo() {
+  todoStore.deleteToDo(props.id);
+}
 </script>
 
 <template>
@@ -32,6 +37,9 @@ function toggleCompletedState() {
       <button class="check-btn" @click="toggleCompletedState">
         <span v-if="isDone" class="material-symbols-outlined checked">check_box</span>
         <span v-if="!isDone" class="material-symbols-outlined">check_box_outline_blank</span>
+      </button>
+      <button class="delete-btn" @click="deleteToDo">
+        <span class="material-symbols-outlined">delete</span>
       </button>
     </div>
   </div>
