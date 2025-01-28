@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 import SingleTodo from '@/components/SingleTodo.vue';
 import { useTodosStore } from '@/stores/todos.ts';
@@ -10,6 +10,7 @@ const { todos } = storeToRefs(todoStore);
 
 const todoName = ref('');
 const showCompletedMessage = ref(false);
+const showAllTasksCompletedMessage = ref(false);
 
 function addTodo() {
   todoStore.addNewTodo(todoName.value, false);
@@ -18,11 +19,23 @@ function addTodo() {
 function onTaskCompleted() {
   showCompletedMessage.value = true;
   setTimeout(clearMessage, 2000);
+
+  checkAllTasksCompleted();
 }
 
 function clearMessage() {
   showCompletedMessage.value = false;
 }
+
+const allTodosCompleted = computed(() => todos.value.length > 0 && todos.value.every(todo => todo.complete));
+
+function checkAllTasksCompleted() {
+  if (allTodosCompleted.value) {
+    showAllTasksCompletedMessage.value = true;
+  }
+}
+
+
 </script>
 
 <template>
@@ -33,7 +46,7 @@ function clearMessage() {
         <SingleTodo :todo-text="todo.text" :complete="todo.complete" :id="todo.id" @task-completed="onTaskCompleted" />
       </div>
 
-      <p v-if="todos.length === 0">Du är klar med alla uppgifter!</p>
+      <p class="msg" v-if="todos.length === 0">Det finns inga uppgifter i din lista ännu</p>
 
     </div>
     <div class="input-wrapper">
@@ -42,13 +55,16 @@ function clearMessage() {
     </div>
   </main>
 
-  <p v-if="showCompletedMessage">Snyggt jobbat med att göra klart en uppgift!</p>
+  <p class="msg" v-if="showCompletedMessage">Snyggt jobbat med att göra klart en uppgift!</p>
+
+  <p class="msg" v-if="allTodosCompleted">Du är klar med alla uppgifter!</p>
+
 </template>
 
 <style scoped lang="scss">
 @import "@/assets/variables.scss";
 
-  main, p {
+  main, .msg {
     background-color: $second-detail-color;
 
     margin-top: 60px;
@@ -64,6 +80,10 @@ function clearMessage() {
 
   .input-wrapper {
     padding-top: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .button {
@@ -75,9 +95,11 @@ function clearMessage() {
     margin-left: 10px
   }
 
-  p {
-    font-size: 1rem;
+  .msg {
     padding-inline: 80px;
-  }
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
