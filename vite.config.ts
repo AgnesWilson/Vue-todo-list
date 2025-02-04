@@ -15,5 +15,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-    base: '/AgnesWilson/Vue-todo-list/'
+    base: '/agneswilson/Vue-todo-list/'
 })
