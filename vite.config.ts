@@ -15,5 +15,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
-    base: '/fed24d-arbetsmetodik-inl-2-vue-AgnesWilson/'
+    base: '/AgnesWilson/Vue-todo-list/'
 })
